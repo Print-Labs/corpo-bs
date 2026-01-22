@@ -1,20 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #ededed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0a0a0f;
     --foreground: #ededed;
   }
 }
@@ -22,5 +22,296 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-animate {
+  background: linear-gradient(-45deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #4facfe 75%,
+      #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+}
+
+.glow-blue {
+  box-shadow: 0 0 40px rgba(79, 172, 254, 0.3);
+}
+
+.glow-pink {
+  box-shadow: 0 0 40px rgba(240, 147, 251, 0.3);
+}
+
+/* Input focus glow */
+.input-glow:focus {
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2), 0 0 20px rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Floating animation for characters */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+
+  66% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+.float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.float-delay-1 {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.float-delay-2 {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.float-delay-3 {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Interdimensional Printer Logo - Rick and Morty Gooey Style */
+
+.interdimensional-logo {
+  font-family: var(--font-gooey), cursive;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  padding: 1rem 2rem;
+}
+
+.interdimensional-text {
+  display: inline-block;
+  background: linear-gradient(135deg,
+      #00ff88 0%,
+      #00ffcc 15%,
+      #97ff00 30%,
+      #00ff88 45%,
+      #00ffcc 60%,
+      #97ff00 75%,
+      #00ff88 100%);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: portal-flow 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8)) drop-shadow(0 0 20px rgba(0, 255, 136, 0.5)) drop-shadow(0 0 40px rgba(151, 255, 0, 0.3));
+  text-shadow: none;
+  position: relative;
+}
+
+@keyframes portal-flow {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.8)) drop-shadow(0 0 20px rgba(0, 255, 136, 0.5)) drop-shadow(0 0 40px rgba(151, 255, 0, 0.3));
+  }
+
+  25% {
+    background-position: 50% 100%;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 204, 0.6)) drop-shadow(0 0 50px rgba(151, 255, 0, 0.4));
+  }
+
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 20px rgba(151, 255, 0, 0.9)) drop-shadow(0 0 35px rgba(151, 255, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 255, 136, 0.4));
+  }
+
+  75% {
+    background-position: 50% 0%;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 204, 0.5)) drop-shadow(0 0 50px rgba(151, 255, 0, 0.3));
+  }
+}
+
+/* Gooey drip effect */
+.gooey-drip {
+  position: absolute;
+  width: 8px;
+  background: linear-gradient(180deg, #00ff88 0%, #00ffcc 50%, transparent 100%);
+  border-radius: 0 0 50% 50%;
+  animation: drip 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.8));
+}
+
+.gooey-drip:nth-child(1) {
+  left: 10%;
+  height: 20px;
+  animation-delay: 0s;
+}
+
+.gooey-drip:nth-child(2) {
+  left: 25%;
+  height: 30px;
+  animation-delay: 0.3s;
+}
+
+.gooey-drip:nth-child(3) {
+  left: 40%;
+  height: 15px;
+  animation-delay: 0.6s;
+}
+
+.gooey-drip:nth-child(4) {
+  left: 55%;
+  height: 25px;
+  animation-delay: 0.9s;
+}
+
+.gooey-drip:nth-child(5) {
+  left: 70%;
+  height: 18px;
+  animation-delay: 1.2s;
+}
+
+.gooey-drip:nth-child(6) {
+  left: 85%;
+  height: 22px;
+  animation-delay: 1.5s;
+}
+
+@keyframes drip {
+
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(15px) scaleY(1.3);
+    opacity: 1;
+  }
+}
+
+/* Floating portal bubbles around logo */
+.portal-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 255, 136, 0.6), rgba(0, 255, 204, 0.2));
+  animation: bubble-float 4s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes bubble-float {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Wobble animation for gooey effect */
+.interdimensional-logo:hover .interdimensional-text {
+  animation: portal-flow 1.5s ease-in-out infinite, wobble 0.5s ease-in-out;
+}
+
+@keyframes wobble {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+
+  50% {
+    transform: scale(0.95) rotate(2deg);
+  }
+
+  75% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+}
+
+/* SVG filter for extra gooey effect */
+.gooey-filter {
+  filter: url(#goo);
 }
