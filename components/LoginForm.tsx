@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { Github, Apple } from "lucide-react";
 import { motion } from "framer-motion";
+import SignInButton from "./SignInButton";
+
+import CrossfadeLink from "./CrossfadeLink";
 
 interface LoginFormProps {
     onPasswordFocusChange: (isFocused: boolean) => void;
@@ -14,18 +17,6 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [focusedField, setFocusedField] = useState<string | null>(null);
-
-    // Calculate adjacent harmonious color (shift hue by 60 degrees for flow)
-    const getFlowingColor = (color: string) => {
-        const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
-        if (match) {
-            const hue = (parseInt(match[1]) + 60) % 360; // 60° ahead in color wheel
-            return `hsl(${hue}, ${match[2]}%, ${match[3]}%)`;
-        }
-        return color;
-    };
-
-    const flowingColor = getFlowingColor(gradientColor);
 
     return (
         <motion.div
@@ -39,19 +30,36 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
             <div className="text-center mb-8">
-                <motion.h1
-                    className="text-4xl font-bold mb-2"
-                    style={{ color: flowingColor }}
-                    animate={{ color: flowingColor }}
-                    transition={{ duration: 0.3 }}
-                >
-                    Welcome Back
-                </motion.h1>
+                <div className="relative inline-block">
+                    {/* Rainbow Text (Absolute Overlay) */}
+                    <motion.h1
+                        className="text-4xl font-bold mb-2 text-gradient-animate absolute inset-0"
+                        animate={{ opacity: isLogoHovered ? 0 : 1 }}
+                        transition={{ duration: 1.0 }}
+                        aria-hidden="true"
+                    >
+                        Welcome Back
+                    </motion.h1>
+
+                    {/* Green Text (Relative Layout) */}
+                    <motion.h1
+                        className="text-4xl font-bold mb-2 text-gradient-green-black"
+                        animate={{
+                            opacity: isLogoHovered ? 1 : 0,
+                            textShadow: isLogoHovered
+                                ? "0 0 20px rgba(22, 163, 74, 0.5), 0 0 40px rgba(22, 163, 74, 0.3)"
+                                : "0 0 0px transparent"
+                        }}
+                        transition={{ duration: 1.0 }}
+                    >
+                        Welcome Back
+                    </motion.h1>
+                </div>
                 <motion.p
                     className="text-sm"
                     style={{ color: `${gradientColor}CC` }}
                     animate={{ color: `${gradientColor}CC` }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 1.0 }}
                 >
                     Sign in to continue your journey
                 </motion.p>
@@ -93,7 +101,7 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
                         className="block text-sm font-medium mb-2"
                         style={{ color: `${gradientColor}DD` }}
                         animate={{ color: `${gradientColor}DD` }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 1.0 }}
                     >
                         Email address
                     </motion.label>
@@ -120,7 +128,7 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
                         className="block text-sm font-medium mb-2"
                         style={{ color: `${gradientColor}DD` }}
                         animate={{ color: `${gradientColor}DD` }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 1.0 }}
                     >
                         Password
                     </motion.label>
@@ -148,36 +156,21 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
 
                 {/* Forgot Password */}
                 <div className="flex items-center justify-end">
-                    <a href="#" className="text-sm text-purple-400 hover:text-purple-300">
+                    <CrossfadeLink href="#" isLogoHovered={isLogoHovered} className="text-sm">
                         Forgot password?
-                    </a>
+                    </CrossfadeLink>
                 </div>
 
                 {/* Submit Button */}
-                <motion.button
-                    type="submit"
-                    className="w-full rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg"
-                    style={{
-                        background: isLogoHovered
-                            ? "linear-gradient(135deg, #16a34a 0%, #020617 100%)"
-                            : flowingColor,
-                        boxShadow: isLogoHovered
-                            ? "0 10px 30px rgba(22, 163, 74, 0.4), 0 0 20px rgba(22, 163, 74, 0.2)"
-                            : `0 10px 30px ${flowingColor}50`
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                >
-                    Sign in
-                </motion.button>
+                <SignInButton isLogoHovered={isLogoHovered} />
             </form>
 
             {/* Sign Up Link */}
             <p className="mt-6 text-center text-sm text-gray-400">
                 Don't have an account?{" "}
-                <a href="#" className="text-purple-400 hover:text-purple-300 font-medium">
+                <CrossfadeLink href="#" isLogoHovered={isLogoHovered}>
                     Sign up
-                </a>
+                </CrossfadeLink>
             </p>
         </motion.div>
     );
