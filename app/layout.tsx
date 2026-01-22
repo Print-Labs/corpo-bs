@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Rubik_Bubbles } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const rubikBubbles = Rubik_Bubbles({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-gooey"
-});
 
 export const metadata: Metadata = {
   title: "Interdimensional Printer",
@@ -21,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${rubikBubbles.variable} antialiased`}>
+      <body className="antialiased">
         {children}
       </body>
     </html>

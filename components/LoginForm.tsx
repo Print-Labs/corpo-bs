@@ -7,9 +7,10 @@ import { motion } from "framer-motion";
 interface LoginFormProps {
     onPasswordFocusChange: (isFocused: boolean) => void;
     gradientColor?: string;
+    isLogoHovered?: boolean;
 }
 
-export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78BFA" }: LoginFormProps) {
+export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78BFA", isLogoHovered = false }: LoginFormProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -157,8 +158,12 @@ export default function LoginForm({ onPasswordFocusChange, gradientColor = "#A78
                     type="submit"
                     className="w-full rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg"
                     style={{
-                        background: flowingColor,
-                        boxShadow: `0 10px 30px ${flowingColor}50`
+                        background: isLogoHovered
+                            ? "linear-gradient(135deg, #16a34a 0%, #020617 100%)"
+                            : flowingColor,
+                        boxShadow: isLogoHovered
+                            ? "0 10px 30px rgba(22, 163, 74, 0.4), 0 0 20px rgba(22, 163, 74, 0.2)"
+                            : `0 10px 30px ${flowingColor}50`
                     }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

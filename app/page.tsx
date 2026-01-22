@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import LoginForm from "@/components/LoginForm";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 // Generate static star data once
 const generateStars = (count: number) => {
@@ -22,6 +23,7 @@ const STARS = generateStars(60);
 export default function Home() {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [gradientPhase, setGradientPhase] = useState(0);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
 
   // Track gradient animation phase
   useEffect(() => {
@@ -33,6 +35,11 @@ export default function Home() {
 
   // Generate colors based on gradient phase (for login form)
   const getGradientColor = (offset: number) => {
+    if (isLogoHovered) {
+      // Green-black theme when logo is hovered
+      const hue = 120; // Green hue
+      return `hsl(${hue}, 60%, 35%)`;
+    }
     const hue = (gradientPhase + offset) % 360;
     return `hsl(${hue}, 70%, 60%)`;
   };
@@ -44,21 +51,44 @@ export default function Home() {
     return (raw + 1) / 2;
   };
 
+  // Get star glow color based on hover and position
+  const getStarGlow = (left: number, top: number, brightness: number) => {
+    if (isLogoHovered) {
+      // Diagonal split: top-left is green side, bottom-right is black side
+      const diagonalPosition = (left + top) / 2;
+      if (diagonalPosition < 50) {
+        // Green side - dark/black glow
+        const darkValue = Math.round((1 - brightness) * 40);
+        return { r: darkValue, g: darkValue + 10, b: darkValue };
+      } else {
+        // Black side - white glow
+        const brightValue = Math.round(brightness * 255);
+        return { r: brightValue, g: brightValue, b: brightValue };
+      }
+    }
+    // Default: grayscale glow
+    const colorValue = Math.round(brightness * 255);
+    return { r: colorValue, g: colorValue, b: colorValue };
+  };
+
   return (
     <main className="min-h-screen relative overflow-hidden">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 gradient-animate" />
+      {/* Animated Gradient Background - both rendered, opacity crossfade */}
+      <div
+        className="absolute inset-0 gradient-animate transition-opacity duration-700 ease-in-out"
+        style={{ opacity: isLogoHovered ? 0 : 1 }}
+      />
+      <div
+        className="absolute inset-0 gradient-green-black transition-opacity duration-700 ease-in-out"
+        style={{ opacity: isLogoHovered ? 1 : 0 }}
+      />
 
-      {/* Floating orbs for depth */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
 
       {/* Stars with Deep Glow Radiance and Sway */}
       {STARS.map((star) => {
         const brightness = getStarBrightness(star.left, star.top);
-        const colorValue = Math.round(brightness * 255);
-        const coreColor = `rgb(${colorValue}, ${colorValue}, ${colorValue})`;
+        const glowColor = getStarGlow(star.left, star.top, brightness);
+        const coreColor = `rgb(${glowColor.r}, ${glowColor.g}, ${glowColor.b})`;
         const glowOpacity = 0.6 + brightness * 0.4;
 
         // Much more dramatic movement synced with gradient
@@ -76,16 +106,16 @@ export default function Home() {
         const deepGlow = `
           0 0 ${2}px ${coreColor},
           0 0 ${4}px ${coreColor},
-          0 0 ${8}px rgba(${colorValue}, ${colorValue}, ${colorValue}, 0.8),
-          0 0 ${16}px rgba(${colorValue}, ${colorValue}, ${colorValue}, 0.5),
-          0 0 ${32}px rgba(${colorValue}, ${colorValue}, ${colorValue}, 0.3),
-          0 0 ${48}px rgba(${colorValue}, ${colorValue}, ${colorValue}, 0.15)
+          0 0 ${8}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.8),
+          0 0 ${16}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.5),
+          0 0 ${32}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.3),
+          0 0 ${48}px rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0.15)
         `;
 
         return (
           <div
             key={star.id}
-            className="absolute rounded-full"
+            className="absolute rounded-full transition-all duration-500"
             style={{
               width: star.size,
               height: star.size,
@@ -101,46 +131,42 @@ export default function Home() {
       })}
 
       {/* Main Content Container */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-8">
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 py-10 sm:px-10">
+        <div className="w-full max-w-5xl mx-auto flex flex-col items-center gap-10 md:grid md:grid-cols-2 md:items-center md:gap-12">
 
-        {/* Interdimensional Printer Logo */}
-        <motion.div
-          className="interdimensional-logo mb-8"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          {/* Portal bubbles */}
-          <div className="portal-bubble" style={{ width: 12, height: 12, top: -10, left: '5%', animationDelay: '0s' }} />
-          <div className="portal-bubble" style={{ width: 8, height: 8, top: 5, left: '15%', animationDelay: '0.5s' }} />
-          <div className="portal-bubble" style={{ width: 10, height: 10, top: -15, right: '10%', animationDelay: '1s' }} />
-          <div className="portal-bubble" style={{ width: 6, height: 6, top: 0, right: '20%', animationDelay: '1.5s' }} />
-          <div className="portal-bubble" style={{ width: 14, height: 14, top: -5, left: '50%', animationDelay: '0.7s' }} />
+          {/* Logo / Brand */}
+          <motion.div
+            className="w-full flex flex-col items-center md:items-start cursor-pointer"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            onMouseEnter={() => setIsLogoHovered(true)}
+            onMouseLeave={() => setIsLogoHovered(false)}
+          >
+            <Image
+              src="/logo.png"
+              alt="Interdimensional Printer"
+              width={520}
+              height={520}
+              priority
+              className={`h-auto w-[260px] sm:w-[340px] md:w-[380px] lg:w-[420px] transition-all duration-500 ${isLogoHovered
+                ? 'drop-shadow-[0_0_35px_rgba(34,197,94,0.5)]'
+                : 'drop-shadow-[0_0_28px_rgba(0,255,136,0.35)]'
+                }`}
+            />
+          </motion.div>
 
-          {/* Main text */}
-          <div>
-            <span className="interdimensional-text">
-              Interdimensional Printer
-            </span>
+          {/* Login Form */}
+          <div className="w-full flex justify-center md:justify-end">
+            <LoginForm
+              onPasswordFocusChange={setIsPasswordFocused}
+              gradientColor={getGradientColor(0)}
+              isLogoHovered={isLogoHovered}
+            />
           </div>
-
-          {/* Dripping goo elements */}
-          <div className="absolute bottom-0 left-0 right-0 h-10 overflow-visible">
-            <div className="gooey-drip" />
-            <div className="gooey-drip" />
-            <div className="gooey-drip" />
-            <div className="gooey-drip" />
-            <div className="gooey-drip" />
-            <div className="gooey-drip" />
-          </div>
-        </motion.div>
-
-        {/* Login Form */}
-        <LoginForm
-          onPasswordFocusChange={setIsPasswordFocused}
-          gradientColor={getGradientColor(0)}
-        />
+        </div>
       </div>
     </main>
   );
 }
+
