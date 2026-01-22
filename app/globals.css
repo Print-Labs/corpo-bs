@@ -86,6 +86,7 @@ body {
   -webkit-background-clip: text;
   color: transparent;
   transition: opacity 1000ms ease-in-out;
+  background-attachment: fixed;
 }
 
 /* Utility for green-black text gradient */
@@ -102,6 +103,7 @@ body {
   -webkit-background-clip: text;
   color: transparent;
   transition: opacity 1000ms ease-in-out;
+  background-attachment: fixed;
 }
 
 /* Button gradient animation */
@@ -115,6 +117,7 @@ body {
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
   transition: opacity 1000ms ease-in-out;
+  background-attachment: fixed;
 }
 
 .btn-gradient-green-black {
@@ -127,6 +130,7 @@ body {
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
   transition: opacity 1000ms ease-in-out;
+  background-attachment: fixed;
 }
 
 /* Glassmorphism utilities */
@@ -138,14 +142,10 @@ body {
 }
 
 .glass-strong {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0.01) 100%);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.37),
-    inset 0 0 30px rgba(255, 255, 255, 0.05),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Glow effects */

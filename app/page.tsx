@@ -45,13 +45,19 @@ export default function Home() {
   };
 
   // Fast brightness calculation - synced with gradient speed
+  // Produces a value between 0 and 1 based on position and time
   const getStarBrightness = (left: number, top: number) => {
     const positionPhase = (left + top) * 2; // 2x faster color change
     const raw = Math.sin((gradientPhase * 2 + positionPhase) * Math.PI / 180);
     return (raw + 1) / 2;
   };
 
-  // Get star glow color based on hover and position
+  /**
+   * Calculates the color of the star's glow based on:
+   * 1. Hover State (Green Theme vs Rainbow Theme)
+   * 2. Position (Diagonal split for Green Theme)
+   * 3. Brightness level
+   */
   const getStarGlow = (left: number, top: number, brightness: number) => {
     if (isLogoHovered) {
       // Diagonal split: top-left is green side, bottom-right is black side
@@ -75,11 +81,11 @@ export default function Home() {
     <main className="min-h-screen relative overflow-hidden">
       {/* Animated Gradient Background - both rendered, opacity crossfade */}
       <div
-        className="absolute inset-0 gradient-animate transition-opacity duration-700 ease-in-out"
+        className="absolute inset-0 gradient-animate transition-opacity duration-1000 ease-in-out"
         style={{ opacity: isLogoHovered ? 0 : 1 }}
       />
       <div
-        className="absolute inset-0 gradient-green-black transition-opacity duration-700 ease-in-out"
+        className="absolute inset-0 gradient-green-black transition-opacity duration-1000 ease-in-out"
         style={{ opacity: isLogoHovered ? 1 : 0 }}
       />
 
