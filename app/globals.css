@@ -72,6 +72,63 @@ body {
   transition-timing-function: ease-in-out;
 }
 
+/* Utility for text gradient that matches background animation */
+.text-gradient-animate {
+  background: linear-gradient(-45deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #4facfe 75%,
+      #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: opacity 1000ms ease-in-out;
+}
+
+/* Utility for green-black text gradient */
+.text-gradient-green-black {
+  background: linear-gradient(-45deg,
+      #16a34a 0%,
+      #22c55e 25%,
+      #4ade80 50%,
+      #22c55e 75%,
+      #16a34a 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: opacity 1000ms ease-in-out;
+}
+
+/* Button gradient animation */
+.btn-gradient-animate {
+  background: linear-gradient(-45deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #4facfe 75%,
+      #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  transition: opacity 1000ms ease-in-out;
+}
+
+.btn-gradient-green-black {
+  background: linear-gradient(-45deg,
+      #14532d 0%,
+      #16a34a 25%,
+      #22c55e 50%,
+      #16a34a 75%,
+      #14532d 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+  transition: opacity 1000ms ease-in-out;
+}
+
 /* Glassmorphism utilities */
 .glass {
   background: rgba(0, 0, 0, 0.4);
